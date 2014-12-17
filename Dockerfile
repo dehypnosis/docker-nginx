@@ -1,5 +1,5 @@
 # Nginx
-# VERSION 0.1
+# VERSION 0.2
 
 FROM smile/base
 
@@ -17,6 +17,9 @@ RUN \
 
 # Runit Nginx service
 ADD nginx.sh /etc/service/nginx/run
+
+# Disable IPv6 (require privileged mode)
+ADD ipv6off.sh /etc/rc.local
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
