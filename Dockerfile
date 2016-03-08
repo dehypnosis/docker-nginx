@@ -1,11 +1,10 @@
 # Custom Nginx build with the bunch of 3rd party modules
-# VERSION 1.0
 
 FROM phusion/baseimage:0.9.18
 
 MAINTAINER Pavel Derendyaev <dddpaul@gmail.com>
 
-ENV NGINX_VERSION 1.9.9
+ENV NGINX_VERSION 1.9.12
 ENV LANG=en_US.utf8
 
 RUN apt-get update && apt-get -y install build-essential libpcre3-dev zlib1g-dev libssl-dev libgeoip-dev libluajit-5.1-dev liblua5.1-iconv0
