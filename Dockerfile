@@ -7,17 +7,17 @@ MAINTAINER Pavel Derendyaev <dddpaul@gmail.com>
 ENV NGINX_VERSION 1.9.12
 ENV LANG=en_US.utf8
 
-RUN apt-get update && apt-get -y install build-essential libpcre3-dev zlib1g-dev libssl-dev libgeoip-dev libluajit-5.1-dev liblua5.1-iconv0
-
-# Install Nginx (configure options is taken mostly from ppa:nginx/stable)
 ADD nginx-${NGINX_VERSION}.tar.gz /tmp/
 ADD ngx_devel_kit /tmp/ngx_devel_kit/
 ADD lua-nginx-module /tmp/lua-nginx-module/
 ADD nginx_upstream_check_module /tmp/nginx_upstream_check_module/
 ADD echo-nginx-module /tmp/echo-nginx-module/
 
-RUN cd /tmp/nginx-${NGINX_VERSION} \
-    && patch -p0 < /tmp/nginx_upstream_check_module/check_1.9.2+.patch \
+# Install Nginx (configure options is taken mostly from ppa:nginx/stable)
+RUN apt-get update \
+	&& apt-get -y install build-essential libpcre3-dev zlib1g-dev libssl-dev libgeoip-dev libluajit-5.1-dev liblua5.1-iconv0 \
+	&& cd /tmp/nginx-${NGINX_VERSION} \
+	&& patch -p0 < /tmp/nginx_upstream_check_module/check_1.9.2+.patch \
 	&& ./configure --with-cc-opt='-g -O2 -fPIE -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2' \
 	   --with-ld-opt='-Wl,-Bsymbolic-functions -fPIE -pie -Wl,-z,relro -Wl,-z,now' --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf \
 	   --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid \
@@ -29,11 +29,13 @@ RUN cd /tmp/nginx-${NGINX_VERSION} \
 	   --add-module=/tmp/lua-nginx-module \
 	   --add-module=/tmp/nginx_upstream_check_module \
 	   --add-module=/tmp/echo-nginx-module \
-   	&& make && make install \
+	&& make && make install \
 	&& mkdir -p /etc/nginx/sites-available \
 	&& mkdir -p /etc/nginx/sites-enabled \
 	&& mkdir -p /var/lib/nginx \
-	&& chown -R www-data:www-data /var/lib/nginx
+	&& chown -R www-data:www-data /var/lib/nginx \
+	&& apt-get -y remove build-essential && apt-get -y autoremove \
+	&& apt-get clean && rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD nginx.conf /etc/nginx/
 ADD lua /etc/nginx/lua
@@ -45,9 +47,6 @@ ADD nginx.sh /etc/service/nginx/run
 
 # Disable IPv6 (require privileged mode)
 ADD ipv6off.sh /etc/rc.local
-
-# Clean up
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
