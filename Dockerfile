@@ -46,12 +46,5 @@ RUN apk --update add build-base openssl-dev pcre-dev zlib-dev geoip-dev luajit-d
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
 
-ADD nginx.conf /etc/nginx/
-ADD lua /etc/nginx/lua
-ADD lua-example.conf /etc/nginx/sites-available/
-
-# Disable IPv6 (require privileged mode)
-ADD ipv6off.sh /etc/rc.local
-
-# Add s6 scripts
+# Add files. There is a script to disable IPv6 (requires privileged mode).
 ADD root /
