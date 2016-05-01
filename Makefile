@@ -3,7 +3,7 @@
 all:	build
 
 build:
-	@docker build --tag=smile/nginx .
+	@docker build --tag=dddpaul/nginx .
 
 release: build
-	@docker build --tag=smile/nginx:$(shell cat VERSION) .
+	@docker build --tag=dddpaul/nginx:$(shell cat VERSION) .
