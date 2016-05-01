@@ -4,7 +4,7 @@ FROM phusion/baseimage:0.9.18
 
 MAINTAINER Pavel Derendyaev <dddpaul@gmail.com>
 
-ENV NGINX_VERSION 1.9.12
+ENV NGINX_VERSION 1.9.15
 ENV LANG=en_US.utf8
 
 ADD nginx-${NGINX_VERSION}.tar.gz /tmp/
