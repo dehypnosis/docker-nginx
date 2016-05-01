@@ -1,6 +1,6 @@
 # Custom Nginx build with the bunch of 3rd party modules
 
-FROM alpine:3.3
+FROM dddpaul/alpine-base:2.0.0
 
 MAINTAINER Pavel Derendyaev <dddpaul@gmail.com>
 
@@ -53,4 +53,5 @@ ADD lua-example.conf /etc/nginx/sites-available/
 # Disable IPv6 (require privileged mode)
 ADD ipv6off.sh /etc/rc.local
 
-CMD ["nginx", "-g", "daemon off;"]
+# Add s6 scripts
+ADD root /

@@ -1,4 +1,6 @@
-all: build
+.PHONY: all build release
+
+all:	build
 
 build:
 	@docker build --tag=smile/nginx .
