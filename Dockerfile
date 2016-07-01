@@ -1,6 +1,6 @@
 # Custom Nginx build with the bunch of 3rd party modules
 
-FROM dddpaul/alpine-base:2.0.0
+FROM dddpaul/alpine-base:2.0.2
 
 MAINTAINER Pavel Derendyaev <dddpaul@gmail.com>
 
