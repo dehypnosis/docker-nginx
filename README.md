@@ -1,5 +1,5 @@
 # docker-nginx
-Nginx image based on [baseimage-docker](http://phusion.github.io/baseimage-docker/).
+Nginx image based on [docker-alpine](https://github.com/smebberson/docker-alpine) with [s6 overlay for containers](https://github.com/just-containers/s6-overlay).
 
 While building the following steps are executed:
 
