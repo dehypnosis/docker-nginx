@@ -34,6 +34,7 @@ RUN apk --update add build-base openssl-dev pcre-dev zlib-dev geoip-dev luajit-d
 	   --with-http_auth_request_module \
 	   --with-http_addition_module \
 	   --with-http_sub_module \
+	   --with-stream \
 	   --add-module=/tmp/ngx_devel_kit \
 	   --add-module=/tmp/lua-nginx-module \
 	   --add-module=/tmp/nginx_upstream_check_module \

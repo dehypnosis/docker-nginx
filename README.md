@@ -34,3 +34,16 @@ location /echo {
 ```
 
 This module allows to plugin external Lua functions (modules), integrate into Nginx request handling phases, invoke subrequests and much more.
+
+## Development
+
+```
+$ git submodule init
+$ git submodule update --recursive
+
+... making some changes
+
+$ make
+
+... tag the built image and push to somewhere
+```
